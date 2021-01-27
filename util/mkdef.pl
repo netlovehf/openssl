@@ -1,5 +1,5 @@
 #! /usr/bin/env perl
-# Copyright 2018 The OpenSSL Project Authors. All Rights Reserved.
+# Copyright 2018-2020 The OpenSSL Project Authors. All Rights Reserved.
 #
 # Licensed under the Apache License 2.0 (the "License").  You may not use
 # this file except in compliance with the License.  You can obtain a copy
@@ -31,6 +31,7 @@ my $version = undef;            # the version to use for the library
 my $OS = undef;                 # the operating system family
 my $verbose = 0;
 my $ctest = 0;
+my $debug = 0;
 
 # For VMS, some modules may have case insensitive names
 my $case_insensitive = 0;
@@ -106,6 +107,7 @@ my %OS_data = (
     solaris     => { writer     => \&writer_linux,
                      sort       => sorter_linux(),
                      platforms  => { UNIX                       => 1 } },
+    "solaris-gcc" => 'solaris', # alias
     linux       => 'solaris',   # alias
     "bsd-gcc"   => 'solaris',   # alias
     aix         => { writer     => \&writer_aix,
@@ -126,6 +128,9 @@ my %OS_data = (
     NT          => 'WIN32',     # alias
     nt          => 'WIN32',     # alias
     mingw       => 'WINDOWS',   # alias
+    nonstop     => { writer     => \&writer_nonstop,
+                     sort       => OpenSSL::Ordinals::by_name(),
+                     platforms  => { TANDEM                     => 1 } },
    );
 
 do {
@@ -193,7 +198,7 @@ sub feature_filter {
             my $symdep = $1 * 10000 + $2 * 100 + ($3 // 0);
             $verdict = 0 if $config{api} >= $symdep;
             print STDERR "DEBUG: \$symdep = $symdep, \$verdict = $verdict\n"
-                if $1 == 0;
+                if $debug && $1 == 0;
         }
     }
 
@@ -275,6 +280,12 @@ _____
 sub writer_aix {
     for (@_) {
         print $_->name(),"\n";
+    }
+}
+
+sub writer_nonstop {
+    for (@_) {
+        print "-export ",$_->name(),"\n";
     }
 }
 

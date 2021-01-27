@@ -12,19 +12,11 @@
 # define OPENSSL_SSLERR_H
 # pragma once
 
-# include <openssl/macros.h>
-# ifndef OPENSSL_NO_DEPRECATED_3_0
-#  define HEADER_SSLERR_H
-# endif
-
 # include <openssl/opensslconf.h>
 # include <openssl/symhacks.h>
+# include <openssl/sslerr_legacy.h>
 
 
-# ifdef  __cplusplus
-extern "C"
-# endif
-int ERR_load_SSL_strings(void);
 
 /*
  * SSL function codes.
@@ -94,6 +86,7 @@ int ERR_load_SSL_strings(void);
 #  define SSL_F_OSSL_STATEM_SERVER_CONSTRUCT_MESSAGE       0
 #  define SSL_F_OSSL_STATEM_SERVER_POST_PROCESS_MESSAGE    0
 #  define SSL_F_OSSL_STATEM_SERVER_POST_WORK               0
+#  define SSL_F_OSSL_STATEM_SERVER_PRE_WORK                0
 #  define SSL_F_OSSL_STATEM_SERVER_PROCESS_MESSAGE         0
 #  define SSL_F_OSSL_STATEM_SERVER_READ_TRANSITION         0
 #  define SSL_F_OSSL_STATEM_SERVER_WRITE_TRANSITION        0
@@ -187,11 +180,13 @@ int ERR_load_SSL_strings(void);
 #  define SSL_F_SSL_CTX_USE_SERVERINFO_FILE                0
 #  define SSL_F_SSL_DANE_DUP                               0
 #  define SSL_F_SSL_DANE_ENABLE                            0
+#  define SSL_F_SSL_DECAPSULATE                            0
 #  define SSL_F_SSL_DERIVE                                 0
 #  define SSL_F_SSL_DO_CONFIG                              0
 #  define SSL_F_SSL_DO_HANDSHAKE                           0
 #  define SSL_F_SSL_DUP_CA_LIST                            0
 #  define SSL_F_SSL_ENABLE_CT                              0
+#  define SSL_F_SSL_ENCAPSULATE                            0
 #  define SSL_F_SSL_GENERATE_PKEY_GROUP                    0
 #  define SSL_F_SSL_GENERATE_SESSION_ID                    0
 #  define SSL_F_SSL_GET_NEW_SESSION                        0
@@ -302,6 +297,7 @@ int ERR_load_SSL_strings(void);
 #  define SSL_F_TLS_CONSTRUCT_CKE_DHE                      0
 #  define SSL_F_TLS_CONSTRUCT_CKE_ECDHE                    0
 #  define SSL_F_TLS_CONSTRUCT_CKE_GOST                     0
+#  define SSL_F_TLS_CONSTRUCT_CKE_GOST18                   0
 #  define SSL_F_TLS_CONSTRUCT_CKE_PSK_PREAMBLE             0
 #  define SSL_F_TLS_CONSTRUCT_CKE_RSA                      0
 #  define SSL_F_TLS_CONSTRUCT_CKE_SRP                      0
@@ -426,6 +422,7 @@ int ERR_load_SSL_strings(void);
 #  define SSL_F_TLS_PROCESS_CKE_DHE                        0
 #  define SSL_F_TLS_PROCESS_CKE_ECDHE                      0
 #  define SSL_F_TLS_PROCESS_CKE_GOST                       0
+#  define SSL_F_TLS_PROCESS_CKE_GOST18                     0
 #  define SSL_F_TLS_PROCESS_CKE_PSK_PREAMBLE               0
 #  define SSL_F_TLS_PROCESS_CKE_RSA                        0
 #  define SSL_F_TLS_PROCESS_CKE_SRP                        0
@@ -515,7 +512,6 @@ int ERR_load_SSL_strings(void);
 # define SSL_R_CERT_LENGTH_MISMATCH                       135
 # define SSL_R_CIPHERSUITE_DIGEST_HAS_CHANGED             218
 # define SSL_R_CIPHER_CODE_WRONG_LENGTH                   137
-# define SSL_R_CIPHER_OR_HASH_UNAVAILABLE                 138
 # define SSL_R_CLIENTHELLO_TLSEXT                         226
 # define SSL_R_COMPRESSED_LENGTH_TOO_LONG                 140
 # define SSL_R_COMPRESSION_DISABLED                       343
@@ -526,6 +522,7 @@ int ERR_load_SSL_strings(void);
 # define SSL_R_CONTEXT_NOT_DANE_ENABLED                   167
 # define SSL_R_COOKIE_GEN_CALLBACK_FAILURE                400
 # define SSL_R_COOKIE_MISMATCH                            308
+# define SSL_R_COPY_PARAMETERS_FAILED                     296
 # define SSL_R_CUSTOM_EXT_HANDLER_ALREADY_INSTALLED       206
 # define SSL_R_DANE_ALREADY_ENABLED                       172
 # define SSL_R_DANE_CANNOT_OVERRIDE_MTYPE_FULL            173
@@ -634,6 +631,7 @@ int ERR_load_SSL_strings(void);
 # define SSL_R_NO_SHARED_GROUPS                           410
 # define SSL_R_NO_SHARED_SIGNATURE_ALGORITHMS             376
 # define SSL_R_NO_SRTP_PROFILES                           359
+# define SSL_R_NO_SUITABLE_DIGEST_ALGORITHM               297
 # define SSL_R_NO_SUITABLE_KEY_SHARE                      101
 # define SSL_R_NO_SUITABLE_SIGNATURE_ALGORITHM            118
 # define SSL_R_NO_VALID_SCTS                              216

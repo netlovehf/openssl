@@ -10,6 +10,7 @@
 
 #include <openssl/err.h>
 #include <openssl/sslerr.h>
+#include "sslerr.h"
 
 #ifndef OPENSSL_NO_ERR
 
@@ -87,8 +88,6 @@ static const ERR_STRING_DATA SSL_str_reasons[] = {
     "ciphersuite digest has changed"},
     {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_CIPHER_CODE_WRONG_LENGTH),
     "cipher code wrong length"},
-    {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_CIPHER_OR_HASH_UNAVAILABLE),
-    "cipher or hash unavailable"},
     {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_CLIENTHELLO_TLSEXT), "clienthello tlsext"},
     {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_COMPRESSED_LENGTH_TOO_LONG),
     "compressed length too long"},
@@ -107,6 +106,8 @@ static const ERR_STRING_DATA SSL_str_reasons[] = {
     {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_COOKIE_GEN_CALLBACK_FAILURE),
     "cookie gen callback failure"},
     {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_COOKIE_MISMATCH), "cookie mismatch"},
+    {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_COPY_PARAMETERS_FAILED),
+    "copy parameters failed"},
     {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_CUSTOM_EXT_HANDLER_ALREADY_INSTALLED),
     "custom ext handler already installed"},
     {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_DANE_ALREADY_ENABLED),
@@ -296,6 +297,8 @@ static const ERR_STRING_DATA SSL_str_reasons[] = {
     {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_NO_SHARED_SIGNATURE_ALGORITHMS),
     "no shared signature algorithms"},
     {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_NO_SRTP_PROFILES), "no srtp profiles"},
+    {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_NO_SUITABLE_DIGEST_ALGORITHM),
+    "no suitable digest algorithm"},
     {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_NO_SUITABLE_KEY_SHARE),
     "no suitable key share"},
     {ERR_PACK(ERR_LIB_SSL, 0, SSL_R_NO_SUITABLE_SIGNATURE_ALGORITHM),
@@ -551,7 +554,7 @@ static const ERR_STRING_DATA SSL_str_reasons[] = {
 
 #endif
 
-int ERR_load_SSL_strings(void)
+int err_load_SSL_strings_int(void)
 {
 #ifndef OPENSSL_NO_ERR
     if (ERR_reason_error_string(SSL_str_reasons[0].error) == NULL)

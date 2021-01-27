@@ -1,5 +1,5 @@
 /*
- * Copyright 2015-2018 The OpenSSL Project Authors. All Rights Reserved.
+ * Copyright 2015-2020 The OpenSSL Project Authors. All Rights Reserved.
  *
  * Licensed under the Apache License 2.0 (the "License").  You may not use
  * this file except in compliance with the License.  You can obtain a copy
@@ -14,7 +14,7 @@
 
 static int test_sec_mem(void)
 {
-#ifdef OPENSSL_SECURE_MEMORY
+#ifndef OPENSSL_NO_SECURE_MEMORY
     int testresult = 0;
     char *p = NULL, *q = NULL, *r = NULL, *s = NULL;
 
@@ -135,7 +135,7 @@ static int test_sec_mem(void)
 
 static int test_sec_mem_clear(void)
 {
-#ifdef OPENSSL_SECURE_MEMORY
+#ifndef OPENSSL_NO_SECURE_MEMORY
     const int size = 64;
     unsigned char *p = NULL;
     int i, res = 0;
